@@ -3,16 +3,16 @@ input -> Linear -> Tanh -> Linear -> output
 """
 from typing import Callable, Dict
 import numpy as np
-from library.tensor import Tensor
+from tensor import Tensor
 
 class Layer:
     def __init__(self) -> None:
-        self.params: Dict[str, Tensor] = {}
+        self.parameters: Dict[str, Tensor] = {}
         self.gradient: Dict[str, Tensor] = {}
     def forward(self, inputs: Tensor) -> Tensor:
-        raise NotImplemented()
+        raise NotImplemented()  # type: ignore #
     def backward(self, inputs: Tensor) -> Tensor:
-        raise NotImplemented()
+        raise NotImplemented()  # type: ignore #
 
 
 class Linear(Layer):
@@ -21,14 +21,15 @@ class Linear(Layer):
         inputs -> (batch_size, input_size)
         outputs -> (batch_size, output_size) 
         """
-        self.params["weights"] = np.random.randn(input_size, output_size)
-        self.params["bias"] = np.random.randn(output_size)
+        super().__init__()
+        self.parameters["weights"] = np.random.randn(input_size, output_size)
+        self.parameters["bias"] = np.random.randn(output_size)
     def forward(self, inputs: Tensor) -> Tensor:
         """
         output = linear equation = inputs @ weights + bias
         """
         self.inputs = inputs 
-        return inputs @ self.params["weights"] + self.params["bias"]
+        return inputs @ self.parameters["weights"] + self.parameters["bias"]
     def backward(self, gradient: Tensor) -> Tensor:
         """
         if y = f(x) and x = inputs @ weights + bias
@@ -43,7 +44,7 @@ class Linear(Layer):
         """
         self.gradient["bias"] = np.sum(gradient, axis = 0)
         self.gradient["weights"] = self.inputs.T @ gradient
-        return gradient @ self.params["weights"].T
+        return gradient @ self.parameters["weights"].T
 
 class Activation(Layer):
     def __init__(self, 
@@ -55,8 +56,13 @@ class Activation(Layer):
     def forward(self, inputs: Tensor) -> Tensor:
         self.inputs = inputs
         return self.function(inputs)
-    def backward(self, inputs: Tensor):
-        raise NotImplemented()
+    def backward(self, gradient: Tensor):
+        """
+        if y = f(x) and x = g(z)
+        then dy/dz = f'(x) * g'(z)
+        """
+        return self.function_prime(self.inputs) * gradient
+
 
 # @staticmethod
 def tanh(tensor: Tensor) -> Tensor:

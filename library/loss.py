@@ -2,13 +2,13 @@
 loss function measures how far are predicted results from actual
 """
 import numpy as np
-from library.tensor import Tensor
+from tensor import Tensor
 
 class Loss:
     def loss(self, predicted: Tensor, actual: Tensor) -> float:
-        raise NotImplemented()
+        raise NotImplemented() # type: ignore #
     def gradient(self, predicted: Tensor, actual: Tensor) -> Tensor:
-        raise NotImplemented()
+        raise NotImplemented() # type: ignore #
 """
 Total square error
 """
