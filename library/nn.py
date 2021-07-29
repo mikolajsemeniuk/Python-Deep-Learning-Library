@@ -8,6 +8,8 @@ from layer import Layer
 
 class NeuronalNetwork:
     def __init__(self, layers: Sequence[Layer]) -> None:
+        # FIXME
+        print(f'numbers of layers: {len(layers)}\n')
         self.layers = layers
     def forward(self, inputs: Tensor) -> Tensor:
         for layer in self.layers:

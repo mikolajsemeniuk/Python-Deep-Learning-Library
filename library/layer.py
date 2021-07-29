@@ -24,6 +24,8 @@ class Linear(Layer):
         super().__init__()
         self.parameters["weights"] = np.random.randn(input_size, output_size)
         self.parameters["bias"] = np.random.randn(output_size)
+        # FIXME
+        print(f'weights shape: {self.parameters["weights"].shape}, bias shape: {self.parameters["bias"].shape}')
     def forward(self, inputs: Tensor) -> Tensor:
         """
         output = linear equation = inputs @ weights + bias
@@ -46,33 +48,33 @@ class Linear(Layer):
         self.gradient["weights"] = self.inputs.T @ gradient
         return gradient @ self.parameters["weights"].T
 
-class Activation(Layer):
-    def __init__(self, 
-        function: Callable[[Tensor], Tensor],
-        function_prime: Callable[[Tensor], Tensor]) -> None:
-        super().__init__()
-        self.function = function
-        self.function_prime = function_prime
-    def forward(self, inputs: Tensor) -> Tensor:
-        self.inputs = inputs
-        return self.function(inputs)
-    def backward(self, gradient: Tensor):
-        """
-        if y = f(x) and x = g(z)
-        then dy/dz = f'(x) * g'(z)
-        """
-        return self.function_prime(self.inputs) * gradient
+# class Activation(Layer):
+#     def __init__(self, 
+#         function: Callable[[Tensor], Tensor],
+#         function_prime: Callable[[Tensor], Tensor]) -> None:
+#         super().__init__()
+#         self.function = function
+#         self.function_prime = function_prime
+#     def forward(self, inputs: Tensor) -> Tensor:
+#         self.inputs = inputs
+#         return self.function(inputs)
+#     def backward(self, gradient: Tensor):
+#         """
+#         if y = f(x) and x = g(z)
+#         then dy/dz = f'(x) * g'(z)
+#         """
+#         return self.function_prime(self.inputs) * gradient
 
 
-# @staticmethod
-def tanh(tensor: Tensor) -> Tensor:
-    return np.tanh(tensor)
+# # @staticmethod
+# def tanh(tensor: Tensor) -> Tensor:
+#     return np.tanh(tensor)
 
-def tanh_prime(tensor: Tensor) -> Tensor:
-    y: Tensor = tanh(tensor)
-    return 1 - y ** 2
+# def tanh_prime(tensor: Tensor) -> Tensor:
+#     y: Tensor = tanh(tensor)
+#     return 1 - y ** 2
 
-class Tanh(Activation):
-    def __init__(self):
-        super().__init__(tanh, tanh_prime)
+# class Tanh(Activation):
+#     def __init__(self):
+#         super().__init__(tanh, tanh_prime)
 

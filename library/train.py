@@ -11,7 +11,7 @@ from data import DataIterator, BatchIterator
 def train(network: NeuronalNetwork,
         inputs: Tensor,
         targets: Tensor,
-        epochs: int = 5000,
+        epochs: int = 5,
         iterator: DataIterator = BatchIterator(),
         loss: Loss = TSE(),
         optimizer: Optimizer = SGD()):
