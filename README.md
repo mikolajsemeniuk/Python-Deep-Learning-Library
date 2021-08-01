@@ -29,10 +29,3 @@ mypy library/ --ignore-missing-imports
 
 pipenv run python .\library\xor.py
 ```
-### Logic
-n = amount of layers
-fn(fn-1(fn-2(fn-3(x))))
-fn(x) = x @ w + b
-where column of x = rows of w
-and rows of b = rows of w
-or columns of b = columns of b
