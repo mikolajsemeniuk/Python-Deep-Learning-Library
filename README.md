@@ -9,9 +9,9 @@ Advanced system settings ->
 Environment variables ->
 Edit PATH variable ->
 Add three paths if not present:
-    * C:\Users\user_name\AppData\Local\Programs\Python\Python39 (python)
-    * C:\Users\Mikolaj Semeniuk\AppData\Local\Programs\Python\Python39\Scripts (pip)
-    * C:\Users\Mikolaj Semeniuk\AppData\Local\Programs\Python\Python39 (name you will get after running `pip install --user pipenv`)
+* C:\Users\user_name\AppData\Local\Programs\Python\Python39 (python)
+* C:\Users\Mikolaj Semeniuk\AppData\Local\Programs\Python\Python39\Scripts (pip)
+* C:\Users\Mikolaj Semeniuk\AppData\Local\Programs\Python\Python39 (name you will get after running `pip install --user pipenv`)
 ### Commands
 ```sh
 pip list
